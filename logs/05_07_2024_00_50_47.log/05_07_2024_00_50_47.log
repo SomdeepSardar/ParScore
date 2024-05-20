@@ -1,0 +1,13 @@
+[2024-05-07 00:50:52,979] 10 root - INFO - Execution has started inside train_pipeline
+[2024-05-07 00:50:52,980] 26 root - INFO - Entered the data ingestion method or component inside data_ingestion
+[2024-05-07 00:50:54,058] 29 root - INFO - Read the dataset as df inside data_ingestion
+[2024-05-07 00:50:55,342] 38 root - INFO - Train Test split initiated inside data_ingestion
+[2024-05-07 00:50:56,677] 46 root - INFO - Ingestion of data completed inside data_ingestion
+[2024-05-07 00:50:56,991] 69 root - INFO - Read train and test data completed
+[2024-05-07 00:50:56,992] 71 root - INFO - Obtaining preprocessing object
+[2024-05-07 00:50:56,992] 47 root - INFO - Categorical columns: ['Pitch']
+[2024-05-07 00:50:56,995] 48 root - INFO - Numerical columns: ['wckts', 'Area']
+[2024-05-07 00:50:57,011] 84 root - INFO - Applying preprocessing object on training dataframe and testing dataframe.
+[2024-05-07 00:50:57,451] 96 root - INFO - Saved preprocessing object.
+[2024-05-07 00:50:57,471] 33 root - INFO - Split training and test input data in model_trainer
+[2024-05-07 00:50:57,472] 25 root - INFO - custom exception raised in train_pipeline.py

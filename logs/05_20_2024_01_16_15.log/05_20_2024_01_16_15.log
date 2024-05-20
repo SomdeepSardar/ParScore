@@ -1,0 +1,14 @@
+[2024-05-20 01:16:18,347] 10 root - INFO - Execution has started inside train_pipeline
+[2024-05-20 01:16:18,347] 26 root - INFO - Entered the data ingestion method or component inside data_ingestion
+[2024-05-20 01:16:18,433] 29 root - INFO - Read the dataset as df inside data_ingestion
+[2024-05-20 01:16:18,448] 38 root - INFO - Train Test split initiated inside data_ingestion
+[2024-05-20 01:16:18,476] 46 root - INFO - Ingestion of data completed inside data_ingestion
+[2024-05-20 01:16:18,503] 69 root - INFO - Read train and test data completed
+[2024-05-20 01:16:18,503] 71 root - INFO - Obtaining preprocessing object
+[2024-05-20 01:16:18,503] 47 root - INFO - Categorical columns: ['Pitch']
+[2024-05-20 01:16:18,504] 48 root - INFO - Numerical columns: ['wckts', 'Area']
+[2024-05-20 01:16:18,505] 84 root - INFO - Applying preprocessing object on training dataframe and testing dataframe.
+[2024-05-20 01:16:18,534] 96 root - INFO - Saved preprocessing object.
+[2024-05-20 01:16:18,542] 30 root - INFO - Split training and test input data in model_trainer
+[2024-05-20 01:16:41,028] 87 root - INFO - Model Report: {'Linear Regression': 0.7010637751590033, 'K-Neighbors Regressor': 0.8344050456588213, 'Decision Tree': 0.8609844680180283, 'Random Forest': 0.8610659907372034, 'Gradient Boosting': 0.8611857357946299, 'XGBRegressor': 0.8610006654520312}
+[2024-05-20 01:16:41,061] 101 root - INFO - Best found model on both training and testing dataset: GradientBoostingRegressor(learning_rate=0.05, max_depth=8, n_estimators=128) with R2 score: 0.8611857357946299 in model_trainer

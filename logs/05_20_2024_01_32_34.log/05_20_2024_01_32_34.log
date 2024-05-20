@@ -1,0 +1,19 @@
+[2024-05-20 01:32:36,947] 97 werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.102:5000
+[2024-05-20 01:32:36,947] 97 werkzeug - INFO - [33mPress CTRL+C to quit[0m
+[2024-05-20 01:32:46,914] 97 werkzeug - ERROR - 192.168.0.102 - - [20/May/2024 01:32:46] code 400, message Bad request version ('\x02h2\x08http/1.1Di\x00\x05\x00\x03\x02h2\x00\x17\x00\x00\x00-\x00\x02\x01\x01\x00\x05\x00\x05\x01\x00\x00\x00\x00\x00#\x00\x00\x00')
+[2024-05-20 01:32:46,919] 97 werkzeug - INFO - 192.168.0.102 - - [20/May/2024 01:32:46] "[35m[1m\x16\x03\x01\x06À\x01\x00\x06¼\x03\x03*fÚÏZE"bëÕ(\x96\x8f\x9a\x8cã\x80\x9aTt\x0dZ\x07µrVG\x11\x82Ýk³ \x1eó)Û\x0e\x9c¹\\\x8cE\x8d½HO\x81[Û1)É!\x9f\x1dxß\x07\x8a\x85E\\Ö±\x00 ÊÊ\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06SÊÊ\x00\x00\x00\x10\x00\x0e\x00\x0c\x02h2\x08http/1.1Di\x00\x05\x00\x03\x02h2\x00\x17\x00\x00\x00-\x00\x02\x01\x01\x00\x05\x00\x05\x01\x00\x00\x00\x00\x00#\x00\x00\x00[0m" HTTPStatus.BAD_REQUEST -
+[2024-05-20 01:32:47,003] 97 werkzeug - ERROR - 192.168.0.102 - - [20/May/2024 01:32:47] code 400, message Bad request version ('ªê+oÞa\x18Áé¡Û')
+[2024-05-20 01:32:47,003] 97 werkzeug - INFO - 192.168.0.102 - - [20/May/2024 01:32:47] "[35m[1m\x16\x03\x01\x06à\x01\x00\x06Ü\x03\x03\x00DzÎRgw/Ðp\x96ä\x86 Ü,\x9b|\x8d,\x93G.\x08jýB0ÖB\x99\x0d \x1fÚ?3Þ\x05\x1fªê+oÞa\x18Áé¡Û[0m" HTTPStatus.BAD_REQUEST -
+[2024-05-20 01:32:49,914] 97 werkzeug - INFO - 192.168.0.102 - - [20/May/2024 01:32:49] "GET / HTTP/1.1" 200 -
+[2024-05-20 01:32:49,971] 97 werkzeug - INFO - 192.168.0.102 - - [20/May/2024 01:32:49] "[33mGET /crckt-prediction.jpeg HTTP/1.1[0m" 404 -
+[2024-05-20 01:32:50,006] 97 werkzeug - INFO - 192.168.0.102 - - [20/May/2024 01:32:50] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[2024-05-20 01:32:59,389] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 01:32:59] "GET /predict HTTP/1.1" 200 -
+[2024-05-20 01:32:59,428] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 01:32:59] "[33mGET /crckt-prediction.jpeg HTTP/1.1[0m" 404 -
+[2024-05-20 01:32:59,460] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 01:32:59] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[2024-05-20 01:33:01,487] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 01:33:01] "GET /predict HTTP/1.1" 200 -
+[2024-05-20 01:33:01,502] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 01:33:01] "[33mGET /crckt-prediction.jpeg HTTP/1.1[0m" 404 -
+[2024-05-20 01:33:07,666] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 01:33:07] "GET /predict HTTP/1.1" 200 -
+[2024-05-20 01:33:07,687] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 01:33:07] "[33mGET /crckt-prediction.jpeg HTTP/1.1[0m" 404 -

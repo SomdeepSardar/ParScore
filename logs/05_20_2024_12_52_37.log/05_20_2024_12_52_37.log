@@ -1,0 +1,13 @@
+[2024-05-20 12:52:39,826] 97 werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.104:5000
+[2024-05-20 12:52:39,826] 97 werkzeug - INFO - [33mPress CTRL+C to quit[0m
+[2024-05-20 12:52:43,798] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:52:43] "GET /predict HTTP/1.1" 200 -
+[2024-05-20 12:52:43,927] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:52:43] "[36mGET /static/images/crckt-prediction.jpeg HTTP/1.1[0m" 304 -
+[2024-05-20 12:53:06,083] 28 root - INFO - New Data Point inside app.py
+
+[2024-05-20 12:53:06,086] 29 root - INFO -    wckts    Area Pitch
+0    4.0  6789.0   bat
+[2024-05-20 12:53:06,363] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:53:06] "POST /predict HTTP/1.1" 200 -
+[2024-05-20 12:53:06,381] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:53:06] "[36mGET /static/images/crckt-prediction.jpeg HTTP/1.1[0m" 304 -

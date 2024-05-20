@@ -1,0 +1,12 @@
+[2024-05-07 14:41:07,688] 10 root - INFO - Execution has started inside train_pipeline
+[2024-05-07 14:41:07,689] 26 root - INFO - Entered the data ingestion method or component inside data_ingestion
+[2024-05-07 14:41:08,307] 29 root - INFO - Read the dataset as df inside data_ingestion
+[2024-05-07 14:41:09,169] 38 root - INFO - Train Test split initiated inside data_ingestion
+[2024-05-07 14:41:10,003] 46 root - INFO - Ingestion of data completed inside data_ingestion
+[2024-05-07 14:41:10,256] 69 root - INFO - Read train and test data completed
+[2024-05-07 14:41:10,257] 71 root - INFO - Obtaining preprocessing object
+[2024-05-07 14:41:10,257] 47 root - INFO - Categorical columns: ['Pitch']
+[2024-05-07 14:41:10,337] 48 root - INFO - Numerical columns: ['wckts', 'Area']
+[2024-05-07 14:41:10,353] 84 root - INFO - Applying preprocessing object on training dataframe and testing dataframe.
+[2024-05-07 14:41:10,592] 96 root - INFO - Saved preprocessing object.
+[2024-05-07 14:41:10,600] 33 root - INFO - Split training and test input data in model_trainer

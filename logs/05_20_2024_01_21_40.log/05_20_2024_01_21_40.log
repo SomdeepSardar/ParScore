@@ -1,0 +1,10 @@
+[2024-05-20 01:21:43,294] 97 werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.102:5000
+[2024-05-20 01:21:43,294] 97 werkzeug - INFO - [33mPress CTRL+C to quit[0m
+[2024-05-20 01:21:56,685] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 01:21:56] "GET / HTTP/1.1" 200 -
+[2024-05-20 01:21:56,841] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 01:21:56] "[33mGET /crckt-prediction.jpeg HTTP/1.1[0m" 404 -
+[2024-05-20 01:21:56,914] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 01:21:56] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[2024-05-20 01:22:10,854] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 01:22:10] "GET /predictdata HTTP/1.1" 200 -
+[2024-05-20 01:22:10,882] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 01:22:10] "[33mGET /crckt-mtch.jpg HTTP/1.1[0m" 404 -

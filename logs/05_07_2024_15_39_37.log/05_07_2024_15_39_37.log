@@ -1,0 +1,12 @@
+[2024-05-07 15:39:39,992] 97 werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.102:5000
+[2024-05-07 15:39:39,993] 97 werkzeug - INFO - [33mPress CTRL+C to quit[0m
+[2024-05-07 15:41:05,517] 97 werkzeug - INFO - 127.0.0.1 - - [07/May/2024 15:41:05] "GET / HTTP/1.1" 200 -
+[2024-05-07 15:41:13,179] 97 werkzeug - INFO - 127.0.0.1 - - [07/May/2024 15:41:13] "GET /predictdata HTTP/1.1" 200 -
+[2024-05-07 15:42:30,279] 28 root - INFO - New Data Point inside app.py
+
+[2024-05-07 15:42:30,279] 29 root - INFO -    wckts    Area Pitch
+0    4.0  2345.0   bat
+[2024-05-07 15:42:30,664] 97 werkzeug - INFO - 127.0.0.1 - - [07/May/2024 15:42:30] "POST /predictdata HTTP/1.1" 200 -

@@ -1,0 +1,14 @@
+[2024-05-18 17:31:20,603] 10 root - INFO - Execution has started inside train_pipeline
+[2024-05-18 17:31:20,603] 26 root - INFO - Entered the data ingestion method or component inside data_ingestion
+[2024-05-18 17:31:21,450] 29 root - INFO - Read the dataset as df inside data_ingestion
+[2024-05-18 17:31:22,669] 38 root - INFO - Train Test split initiated inside data_ingestion
+[2024-05-18 17:31:23,939] 46 root - INFO - Ingestion of data completed inside data_ingestion
+[2024-05-18 17:31:24,267] 69 root - INFO - Read train and test data completed
+[2024-05-18 17:31:24,267] 71 root - INFO - Obtaining preprocessing object
+[2024-05-18 17:31:24,267] 47 root - INFO - Categorical columns: ['Pitch']
+[2024-05-18 17:31:24,270] 48 root - INFO - Numerical columns: ['wckts', 'Area']
+[2024-05-18 17:31:24,291] 84 root - INFO - Applying preprocessing object on training dataframe and testing dataframe.
+[2024-05-18 17:31:24,798] 96 root - INFO - Saved preprocessing object.
+[2024-05-18 17:31:24,814] 31 root - INFO - Split training and test input data in model_trainer
+[2024-05-18 18:15:44,594] 99 root - INFO - Model Report: {'Random Forest': 0.8634212759542096, 'Decision Tree': 0.8634195964245853, 'Linear Regression': 0.7020307379483685, 'Ridge': 0.7020306862821841, 'Lasso': 0.6949977996881462, 'ElasticNet': 0.45133175970321837}
+[2024-05-18 18:15:44,610] 113 root - INFO - Best found model on both training and testing dataset: RandomForestRegressor() with R2 score: 0.8634212759542096 in model_trainer

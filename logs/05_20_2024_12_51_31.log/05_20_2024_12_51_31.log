@@ -1,0 +1,29 @@
+[2024-05-20 12:51:42,523] 97 werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.104:5000
+[2024-05-20 12:51:42,523] 97 werkzeug - INFO - [33mPress CTRL+C to quit[0m
+[2024-05-20 12:51:45,710] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:51:45] "GET / HTTP/1.1" 200 -
+[2024-05-20 12:51:45,873] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:51:45] "[36mGET /static/images/crckt-prediction.jpeg HTTP/1.1[0m" 304 -
+[2024-05-20 12:51:46,797] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:51:46] "GET /predict HTTP/1.1" 200 -
+[2024-05-20 12:51:46,819] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:51:46] "[33mGET /crckt-mtch.jpg HTTP/1.1[0m" 404 -
+[2024-05-20 12:51:49,835] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:51:49] "GET /predict HTTP/1.1" 200 -
+[2024-05-20 12:51:49,849] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:51:49] "[33mGET /crckt-mtch.jpg HTTP/1.1[0m" 404 -
+[2024-05-20 12:51:52,007] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:51:52] "GET /predict HTTP/1.1" 200 -
+[2024-05-20 12:51:52,030] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:51:52] "[33mGET /crckt-mtch.jpg HTTP/1.1[0m" 404 -
+[2024-05-20 12:52:06,223] 28 root - INFO - New Data Point inside app.py
+
+[2024-05-20 12:52:06,224] 29 root - INFO -    wckts    Area Pitch
+0    7.0  3445.0  bowl
+[2024-05-20 12:52:08,195] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:52:08] "POST /predict HTTP/1.1" 200 -
+[2024-05-20 12:52:08,210] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:52:08] "[33mGET /crckt-mtch.jpg HTTP/1.1[0m" 404 -
+[2024-05-20 12:52:14,662] 28 root - INFO - New Data Point inside app.py
+
+[2024-05-20 12:52:14,662] 29 root - INFO -    wckts    Area Pitch
+0    7.0  3445.0  bowl
+[2024-05-20 12:52:14,717] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:52:14] "POST /predict HTTP/1.1" 200 -
+[2024-05-20 12:52:14,732] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:52:14] "[33mGET /crckt-mtch.jpg HTTP/1.1[0m" 404 -
+[2024-05-20 12:52:20,481] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:52:20] "GET / HTTP/1.1" 200 -
+[2024-05-20 12:52:20,517] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:52:20] "[36mGET /static/images/crckt-prediction.jpeg HTTP/1.1[0m" 304 -
+[2024-05-20 12:52:22,356] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:52:22] "GET /predict HTTP/1.1" 200 -
+[2024-05-20 12:52:22,377] 97 werkzeug - INFO - 127.0.0.1 - - [20/May/2024 12:52:22] "[33mGET /crckt-mtch.jpg HTTP/1.1[0m" 404 -
