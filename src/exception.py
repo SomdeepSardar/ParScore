@@ -1,0 +1,23 @@
+import sys
+from src.logger import logging
+# Sys in Python provides various functions and variables to manipulate different parts of the Python Runtime env.
+
+def error_message_detail(error, error_detail:sys):
+    _,_,exc_tb = error_detail.exc_info() #Not interested in the 1st 2 information. exc_tb provides infor on the file, line no etc
+    file_name = exc_tb.tb_frame.f_code.co_filename
+
+    error_message = "Error occured in the python script [{0}] line number [{1}] error message [{2}]".format(
+        file_name, exc_tb.tb_lineno, str(error)
+    )
+    #[{0}] --> placeholders
+
+    return error_message
+
+class CustomException(Exception):
+
+    def __init__(self, error_message, error_detail:sys):
+        super().__init__(error_message)
+        self.error_message = error_message_detail(error_message, error_detail= error_detail)
+
+    def __str__(self):
+        return self.error_message
