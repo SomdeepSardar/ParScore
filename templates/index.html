@@ -1,0 +1,105 @@
+<html>
+  <head>
+    <title>Prediction page</title>
+  </head>
+  <style>
+    /* Base styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background-image: url({{url_for('static', filename = 'images/crckt-prediction.jpeg')}});
+      background-repeat : no-repeat;
+      background-size: cover;
+    }
+
+    h1 {
+      text-align: center; /* Centers the text */
+      font-size: 4rem; /* Increases the font size */
+      font-weight: 800;
+      color: #d32323; /* Sets the text color to dark gray */
+    }
+
+    h2 {
+      /* margin-top: 20px; Adds a top margin of 50 pixels */
+      font-size: 3rem;
+      font-weight: 800; /* Makes the text bold and light */
+      text-align: center;
+      color: rgb(242, 242, 243);
+    }
+
+    h6 {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 600;
+      color: aliceblue;
+      margin-top: -8px;
+    }
+
+    .predict-button {
+      width: 150px;
+      height: 40px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      text-decoration: none;
+
+      font-size: 24px;
+      font-weight: 600;
+      transition: background-color 0.2s ease-in-out;
+
+      margin-top: -20px;
+    }
+
+    .predict-button:hover {
+      background-color: #0069d9; /* Darker blue on hover */
+    }
+    a {
+      display: block;
+      width: fit-content;
+      margin: auto;
+      text-align: left;
+      font-size: 18px;
+    }
+
+    /* .outer1 {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+    } */
+
+    .outer1 {
+      width: 550px;
+    }
+
+    .psp {
+      margin-top: -40px;
+      color: yellow;
+    }
+  </style>
+  <body class="OUTER">
+    <div class="outer1">
+      <!-- <h1>Welcome to the home page</h1> -->
+      <h2>Welcome to Cricket</h2>
+      <h2 class="psp">Par Score Prediction</h2>
+      <h6>
+        A fun way to keep you engaged with the match. You can predict the score
+        of your fav team which can give them a much probable win!
+      </h6>
+      <!-- <h2>Par score in cricket is a score with which the 1st batting team would be comfortable. </h2> -->
+      <a href="http://127.0.0.1:5000/predict" class="predict-button">Predict</a>
+    </div>
+  </body>
+</html>
