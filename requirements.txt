@@ -6,5 +6,4 @@ matplotlib
 seaborn
 dill
 xgboost
-pickle
 -e .
