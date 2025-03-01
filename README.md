@@ -18,6 +18,6 @@ conda activate venv
 ```python app.py```
 
 ## Step5:  While app.py is running, paste the following in your browser
-```http://127.0.0.1:3000/ ```
+```http://127.0.0.1:5000/ ```
 
 ## Step6: Enjoy the website.
