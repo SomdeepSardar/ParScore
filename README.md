@@ -8,7 +8,7 @@ Kindly follow these steps to run the project:-
 ```
 conda create -p venv python==3.10
 
-conda activate venv 
+conda activate venv/
 ```
 
 ## Step3: Install required packages
