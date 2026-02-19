@@ -6,12 +6,6 @@ application=Flask(__name__)
 
 app=application
 
-## Route for a home page
-
-# @app.route('/')
-# def index():
-#     return render_template('index.html') 
-
 @app.route('/', methods=['GET','POST'])
 
 def predict_datapoint():
@@ -41,7 +35,7 @@ def predict_datapoint():
         Pitch=request.form.get('Pitch')
 
         if (Pitch == 'bat'):
-            true_result = result + 10
+            true_result = result + 30
         else:
             true_result = result
 
