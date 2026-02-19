@@ -1,46 +1,44 @@
-from flask import Flask,request,render_template
+from flask import Flask, request, render_template
 from src.logger import logging
-from src.pipeline.predict_pipeline import CustomData,PredictPipeline
+from src.pipeline.predict_pipeline import CustomData, PredictPipeline
 
-application=Flask(__name__)
+application = Flask(__name__)
+app = application
 
-app=application
-
-@app.route('/', methods=['GET','POST'])
-
+# --- ROUTE 1: THE HOME/PREDICTION PAGE ---
+@app.route('/', methods=['GET', 'POST'])
 def predict_datapoint():
-    if request.method=='GET':
+    if request.method == 'GET':
         return render_template('home.html')
     else:
-        data=CustomData(
+        # Data ingestion logic
+        data = CustomData(
             wckts=float(request.form.get('wckts')),
             Area=float(request.form.get('Area')),
             Pitch=request.form.get('Pitch')
         )
 
-        pred_df=data.get_data_as_data_frame()
+        pred_df = data.get_data_as_data_frame()
         logging.info("New Data Point inside app.py\n")
-        logging.info(pred_df)
-        print(pred_df)
-        print("Before Prediction")
-
-        predict_pipeline=PredictPipeline()
-        # print("Mid Prediction")
-
-        results=predict_pipeline.predict(pred_df)
-        print(f"After Prediction {results}")
-
+        
+        predict_pipeline = PredictPipeline()
+        results = predict_pipeline.predict(pred_df)
+        
         result = round(results[0])
-
-        Pitch=request.form.get('Pitch')
+        Pitch = request.form.get('Pitch')
 
         if (Pitch == 'bat'):
             true_result = result + 30
         else:
             true_result = result
 
-        return render_template('home.html', true_results = true_result)
-    
+        return render_template('home.html', true_results=true_result)
 
-if __name__=="__main__":
-    app.run(host="0.0.0.0")        
+# --- ROUTE 2: THE CALCULATOR PAGE ---
+@app.route('/calculator')
+def calculator():
+    # This renders the calculator.html file from your templates folder
+    return render_template('calculator.html')
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=True) # Added debug=True for easier troubleshooting
