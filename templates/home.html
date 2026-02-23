@@ -4,38 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CricMetrics | Score Predictor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
 
         :root {
             --primary: #1b5e20;
             --accent: #ffd700;
-            --bg-overlay: rgba(0, 0, 0, 0.4);
             --glass-bg: rgba(255, 255, 255, 0.12);
             --glass-border: rgba(255, 255, 255, 0.2);
         }
 
-        /* 1. STRUCTURAL FIX: Ensures the dark overlay never breaks */
+        /* 1. SEAMLESS BACKGROUND LOGIC */
         * { box-sizing: border-box; }
 
         html, body {
             margin: 0; padding: 0; width: 100%; min-height: 100vh;
-            display: flex; flex-direction: column;
+            font-family: 'Poppins', sans-serif;
             background: url("https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=2000") no-repeat center center fixed;
-            background-size: cover; font-family: 'Poppins', sans-serif;
+            background-size: cover;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); 
+            z-index: 0;
         }
 
         .outer { 
-            flex: 1; 
+            position: relative;
+            z-index: 1;
             display: flex; 
             flex-direction: column; 
-            align-items: center; 
-            background: var(--bg-overlay); 
-            padding: 20px 20px 0 20px; /* Aligned with calculator padding */
+            min-height: 100vh; 
+            width: 100%; 
         }
 
-        /* 2. HEADER: UNTOUCHED BRANDING */
-        .header-container { padding: 20px 0; text-align: center; }
+        .header-container { padding: 40px 0 20px; text-align: center; }
         .brand-title { 
             font-size: 2.8rem; font-weight: 400; color: #ffffff; 
             margin: 0; letter-spacing: -1px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); 
@@ -46,7 +53,6 @@
             text-transform: uppercase; letter-spacing: 3px; margin-top: -5px; 
         }
 
-        /* 3. CENTERED CONTENT WRAPPER */
         .main-content {
             flex: 1; 
             display: flex;
@@ -54,10 +60,9 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            padding: 40px 0;
+            padding: 40px 20px;
         }
 
-        /* 4. THE GLASS CARD */
         .login {
             background: var(--glass-bg);
             backdrop-filter: blur(20px) saturate(180%);
@@ -69,11 +74,12 @@
             max-width: 500px;
             text-align: center;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background-size: cover;
+            background-position: center;
         }
 
         h6 { font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); line-height: 1.6; margin-bottom: 30px; font-weight: 400; }
 
-        /* 5. FORM ELEMENTS */
         .mb-3 { margin-bottom: 25px; width: 100%; text-align: left; }
         .form-label {
             display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;
@@ -94,21 +100,26 @@
 
         .calc-link { display: inline-block; margin-top: 10px; color: var(--accent); font-size: 0.85rem; text-decoration: none; font-weight: 600; float: right; }
 
-        /* 6. RESULTS & LOADER */
         .result-display { margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); color: #4dfa9f !important; font-size: 1.8rem; font-weight: 900; }
+        
         #loader { display: none; flex-direction: column; align-items: center; margin-top: 20px; }
         .spinner { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* 7. SYNCED FOOTER: The Translucent Black Bar */
+        .btn-save-img {
+            margin-top: 20px; background: #28a745; color: white; border: none; padding: 12px 24px;
+            border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer;
+            transition: 0.3s; display: inline-flex; align-items: center; gap: 8px;
+        }
+
         footer {
             width: 100%;
             padding: 30px 0;
             text-align: center;
-            font-size: 0.85rem; /* MATCHED TO CALCULATOR.HTML */
+            font-size: 0.85rem; 
             color: rgba(255, 255, 255, 0.6);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.6) !important; /* THE TRANSLUCENT BAR */
+            background: rgba(0, 0, 0, 0.6) !important; 
             backdrop-filter: blur(5px);
             margin-top: auto; 
         }
@@ -125,8 +136,9 @@
     </div>
         
     <div class="main-content">
-        <div class="login">
+        <div class="login" id="export-card">
             <h6>Predict the par score based on ground dynamics.</h6>
+            
             <form action="{{url_for('predict_datapoint')}}" method="post" onsubmit="return showLoading()">
                 <div class="mb-3">
                     <label class="form-label">Ground Area (sq. m)</label>
@@ -136,21 +148,31 @@
                 <div class="mb-3">
                     <label class="form-label">Pitch Surface</label>
                     <select class="form-control" name="Pitch" required>
+                        <option value="" disabled selected>Select Pitch Type</option>
                         <option value="bat">Batting (Flat)</option>
                         <option value="bowl">Bowling (Green/Dusty)</option>
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Wickets Lost</label>
-                    <input class="form-control" type="number" name="wckts" placeholder="0 - 10" required />
+                    <label class="form-label">Anticipated Wickets Lost</label>
+                    <input class="form-control" type="number" name="wckts" required />
                 </div>
                 <div id="predict-btn-container" style="margin-top: 30px;">
                     <input class="btn btn-primary" type="submit" value="Analyze Prediction" />
                 </div>
                 <div id="loader"><div class="spinner"></div></div>
             </form>
+
             {% if true_results %}
-            <h2 class="result-display">🎯 Par Score: {{true_results}}</h2>
+            <div id="results-area">
+                <h2 class="result-display">🎯 Par Score: {{true_results}}</h2>
+                <button class="btn-save-img" onclick="saveAsImage()" id="hide-on-save">
+                    📸 Save Prediction
+                </button>
+            </div>
+            <div id="watermark" style="display:none; color: var(--accent); margin-top: 15px; font-size: 0.8rem; font-weight: 700;">
+                Generated by CricMetrics Analytics
+            </div>
             {% endif %}
         </div>
     </div>
@@ -168,18 +190,72 @@
           const savedArea = sessionStorage.getItem('calculatedArea');
           if (savedArea) {
               const areaInput = document.getElementsByName('Area')[0];
-              if (areaInput) {
-                  areaInput.value = savedArea;
-                  sessionStorage.removeItem('calculatedArea');
-                  areaInput.focus();
-              }
+              if (areaInput) { areaInput.value = savedArea; sessionStorage.removeItem('calculatedArea'); areaInput.focus(); }
           }
       }
+
       function showLoading() {
-          document.getElementById('predict-btn-container').style.display = 'none';
-          document.getElementById('loader').style.display = 'flex';
+          const container = document.getElementById('predict-btn-container');
+          if (container) container.style.display = 'none';
+          const loader = document.getElementById('loader');
+          if (loader) loader.style.display = 'flex';
           return true;
       }
+
+      function saveAsImage() {
+    const element = document.getElementById("export-card");
+    const saveBtn = document.getElementById("hide-on-save");
+    const watermark = document.getElementById("watermark");
+    const inputs = element.querySelectorAll('input, select');
+
+    // 1. RECTIFICATION: Manually sync values to DOM attributes
+    inputs.forEach(input => {
+        if (input.tagName === 'SELECT') {
+            const selectedText = input.options[input.selectedIndex].text;
+            // Create a temporary label for the dropdown selection
+            const textSpan = document.createElement('div');
+            textSpan.className = 'form-control export-placeholder';
+            textSpan.innerText = selectedText;
+            textSpan.style.display = 'flex';
+            textSpan.style.alignItems = 'center';
+            input.style.display = 'none'; // Hide real select
+            input.parentNode.insertBefore(textSpan, input.nextSibling);
+        } else {
+            // Force the typed text into the 'value' attribute
+            input.setAttribute('value', input.value);
+        }
+    });
+
+    // 2. PRE-CAPTURE SETUP
+    const bgImage = 'url("https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=2000")';
+    element.style.backgroundImage = bgImage;
+    element.style.backgroundColor = "rgba(0, 0, 0, 0.75)"; 
+    saveBtn.style.display = "none";
+    watermark.style.display = "block";
+
+    // 3. CAPTURE
+    html2canvas(element, { 
+        scale: 2, 
+        useCORS: true,
+        logging: false 
+    }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'CricMetrics-Prediction.png';
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+
+        // 4. CLEANUP: Restore original interactive state
+        element.style.backgroundImage = "none";
+        element.style.backgroundColor = "transparent";
+        saveBtn.style.display = "inline-flex";
+        watermark.style.display = "none";
+        
+        // Remove the temporary visual labels and restore inputs
+        const placeholders = element.querySelectorAll('.export-placeholder');
+        placeholders.forEach(p => p.remove());
+        inputs.forEach(i => i.style.display = 'block');
+    });
+}
     </script>
 </body>
 </html>
