@@ -15,7 +15,7 @@
             --glass-border: rgba(255, 255, 255, 0.2);
         }
 
-        /* 1. SEAMLESS BACKGROUND LOGIC */
+        /* 1. SEAMLESS BACKGROUND OVERLAY */
         * { box-sizing: border-box; }
 
         html, body {
@@ -29,17 +29,14 @@
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.4); 
+            background: rgba(0, 0, 0, 0.45);
             z-index: 0;
         }
 
         .outer { 
-            position: relative;
-            z-index: 1;
-            display: flex; 
-            flex-direction: column; 
-            min-height: 100vh; 
-            width: 100%; 
+            position: relative; z-index: 1;
+            display: flex; flex-direction: column; 
+            min-height: 100vh; width: 100%; 
         }
 
         .header-container { padding: 40px 0 20px; text-align: center; }
@@ -48,19 +45,11 @@
             margin: 0; letter-spacing: -1px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); 
         }
         .brand-title b { font-weight: 900; color: var(--accent); }
-        .header-tagline { 
-            font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); 
-            text-transform: uppercase; letter-spacing: 3px; margin-top: -5px; 
-        }
+        .header-tagline { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 3px; margin-top: -5px; }
 
         .main-content {
-            flex: 1; 
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            padding: 40px 20px;
+            flex: 1; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; width: 100%; padding: 40px 20px;
         }
 
         .login {
@@ -98,6 +87,21 @@
             transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3); text-transform: uppercase;
         }
 
+        /* Action Buttons Grid */
+        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+
+        .btn-reset {
+            background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.3s; padding: 10px;
+        }
+        .btn-reset:hover { background: rgba(220, 53, 69, 0.8); border-color: transparent; }
+
+        .btn-save-img {
+            background: #28a745; color: white; border: none; padding: 10px;
+            border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.3s;
+        }
+        .btn-save-img:hover { background: #218838; transform: translateY(-2px); }
+
         .calc-link { display: inline-block; margin-top: 10px; color: var(--accent); font-size: 0.85rem; text-decoration: none; font-weight: 600; float: right; }
 
         .result-display { margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); color: #4dfa9f !important; font-size: 1.8rem; font-weight: 900; }
@@ -106,26 +110,14 @@
         .spinner { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .btn-save-img {
-            margin-top: 20px; background: #28a745; color: white; border: none; padding: 12px 24px;
-            border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer;
-            transition: 0.3s; display: inline-flex; align-items: center; gap: 8px;
-        }
-
+        /* SYNCED FOOTER */
         footer {
-            width: 100%;
-            padding: 30px 0;
-            text-align: center;
-            font-size: 0.85rem; 
-            color: rgba(255, 255, 255, 0.6);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.6) !important; 
-            backdrop-filter: blur(5px);
-            margin-top: auto; 
+            width: 100%; padding: 30px 0; text-align: center; font-size: 0.85rem; 
+            color: rgba(255, 255, 255, 0.6); border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(5px); margin-top: auto; 
         }
 
-        .footer-links { margin-bottom: 10px; font-weight: 600; }
-        .footer-links a { color: var(--accent); text-decoration: none; margin: 0 15px; transition: 0.3s; }
+        .footer-links a { color: var(--accent); text-decoration: none; margin: 0 15px; font-weight: 600; }
     </style>
 </head>
 
@@ -139,23 +131,23 @@
         <div class="login" id="export-card">
             <h6>Predict the par score based on ground dynamics.</h6>
             
-            <form action="{{url_for('predict_datapoint')}}" method="post" onsubmit="return showLoading()">
+            <form id="prediction-form" action="{{url_for('predict_datapoint')}}" method="post" onsubmit="return showLoading()">
                 <div class="mb-3">
                     <label class="form-label">Ground Area (sq. m)</label>
-                    <input class="form-control" type="number" step="any" name="Area" placeholder="e.g. 17844" required />
+                    <input class="form-control" type="number" step="any" name="Area" id="area-input" value="{{ request.form.get('Area', '') }}" required />
                     <a href="{{ url_for('calculator') }}" class="calc-link">📏 Venue Analytics</a>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Pitch Surface</label>
-                    <select class="form-control" name="Pitch" required>
-                        <option value="" disabled selected>Select Pitch Type</option>
-                        <option value="bat">Batting (Flat)</option>
-                        <option value="bowl">Bowling (Green/Dusty)</option>
+                    <select class="form-control" name="Pitch" id="pitch-select" required>
+                        <option value="" disabled {% if not request.form.get('Pitch') %}selected{% endif %}>Select Pitch Type</option>
+                        <option value="bat" {% if request.form.get('Pitch') == 'bat' %}selected{% endif %}>Batting (Flat)</option>
+                        <option value="bowl" {% if request.form.get('Pitch') == 'bowl' %}selected{% endif %}>Bowling (Green/Dusty)</option>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Anticipated Wickets Lost</label>
-                    <input class="form-control" type="number" name="wckts" required />
+                    <input class="form-control" type="number" name="wckts" value="{{ request.form.get('wckts', '') }}" required />
                 </div>
                 <div id="predict-btn-container" style="margin-top: 30px;">
                     <input class="btn btn-primary" type="submit" value="Analyze Prediction" />
@@ -163,17 +155,18 @@
                 <div id="loader"><div class="spinner"></div></div>
             </form>
 
-            {% if true_results %}
-            <div id="results-area">
-                <h2 class="result-display">🎯 Par Score: {{true_results}}</h2>
-                <button class="btn-save-img" onclick="saveAsImage()" id="hide-on-save">
-                    📸 Save Prediction
-                </button>
+            <div id="results-area" {% if not true_results %}style="display:none;"{% endif %}>
+                <h2 class="result-display" id="res-text">🎯 Par Score: {{true_results}}</h2>
+                
+                <div class="btn-group" id="action-btns">
+                    <button class="btn-reset" onclick="resetForm()">🔄 Reset Analytics</button>
+                    <button class="btn-save-img" onclick="saveAsImage()">📸 Save Image</button>
+                </div>
+                
+                <div id="watermark" style="display:none; color: var(--accent); margin-top: 15px; font-size: 0.8rem; font-weight: 700;">
+                    Generated by CricMetrics Analytics
+                </div>
             </div>
-            <div id="watermark" style="display:none; color: var(--accent); margin-top: 15px; font-size: 0.8rem; font-weight: 700;">
-                Generated by CricMetrics Analytics
-            </div>
-            {% endif %}
         </div>
     </div>
 
@@ -186,76 +179,80 @@
     </footer>
 
     <script>
+      // 1. DATA PERSISTENCE: Session Storage Sync
       window.onload = function() {
           const savedArea = sessionStorage.getItem('calculatedArea');
           if (savedArea) {
-              const areaInput = document.getElementsByName('Area')[0];
-              if (areaInput) { areaInput.value = savedArea; sessionStorage.removeItem('calculatedArea'); areaInput.focus(); }
+              const areaInput = document.getElementById('area-input');
+              if (areaInput) {
+                  areaInput.value = savedArea;
+                  sessionStorage.removeItem('calculatedArea');
+                  areaInput.focus();
+              }
           }
       }
 
+      // 2. LOGIC CHANGE: Reset button clears everything manually
+      function resetForm() {
+          const form = document.getElementById('prediction-form');
+          form.reset();
+          document.getElementById('results-area').style.display = 'none';
+          // Clean attributes for fresh export
+          form.querySelectorAll('input').forEach(i => i.removeAttribute('value'));
+      }
+
       function showLoading() {
-          const container = document.getElementById('predict-btn-container');
-          if (container) container.style.display = 'none';
-          const loader = document.getElementById('loader');
-          if (loader) loader.style.display = 'flex';
+          document.getElementById('predict-btn-container').style.display = 'none';
+          document.getElementById('loader').style.display = 'flex';
           return true;
       }
 
+      // 3. HARDENED EXPORT: Captures field values and background image
       function saveAsImage() {
-    const element = document.getElementById("export-card");
-    const saveBtn = document.getElementById("hide-on-save");
-    const watermark = document.getElementById("watermark");
-    const inputs = element.querySelectorAll('input, select');
+          const element = document.getElementById("export-card");
+          const btns = document.getElementById("action-btns");
+          const watermark = document.getElementById("watermark");
+          const inputs = element.querySelectorAll('input, select');
 
-    // 1. RECTIFICATION: Manually sync values to DOM attributes
-    inputs.forEach(input => {
-        if (input.tagName === 'SELECT') {
-            const selectedText = input.options[input.selectedIndex].text;
-            // Create a temporary label for the dropdown selection
-            const textSpan = document.createElement('div');
-            textSpan.className = 'form-control export-placeholder';
-            textSpan.innerText = selectedText;
-            textSpan.style.display = 'flex';
-            textSpan.style.alignItems = 'center';
-            input.style.display = 'none'; // Hide real select
-            input.parentNode.insertBefore(textSpan, input.nextSibling);
-        } else {
-            // Force the typed text into the 'value' attribute
-            input.setAttribute('value', input.value);
-        }
-    });
+          // SYNC: Force write current values into DOM attributes so canvas reads them
+          inputs.forEach(input => {
+              if (input.tagName === 'SELECT') {
+                  const selectedText = input.options[input.selectedIndex].text;
+                  const textSpan = document.createElement('div');
+                  textSpan.className = 'form-control export-placeholder';
+                  textSpan.innerText = selectedText;
+                  textSpan.style.display = 'flex';
+                  textSpan.style.alignItems = 'center';
+                  input.style.display = 'none';
+                  input.parentNode.insertBefore(textSpan, input.nextSibling);
+              } else {
+                  input.setAttribute('value', input.value);
+              }
+          });
 
-    // 2. PRE-CAPTURE SETUP
-    const bgImage = 'url("https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=2000")';
-    element.style.backgroundImage = bgImage;
-    element.style.backgroundColor = "rgba(0, 0, 0, 0.75)"; 
-    saveBtn.style.display = "none";
-    watermark.style.display = "block";
+          // PRE-CAPTURE: Background injection
+          const bgImage = 'url("https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=2000")';
+          element.style.backgroundImage = bgImage;
+          element.style.backgroundColor = "rgba(0, 0, 0, 0.75)"; 
+          btns.style.display = "none";
+          watermark.style.display = "block";
 
-    // 3. CAPTURE
-    html2canvas(element, { 
-        scale: 2, 
-        useCORS: true,
-        logging: false 
-    }).then(canvas => {
-        const link = document.createElement('a');
-        link.download = 'CricMetrics-Prediction.png';
-        link.href = canvas.toDataURL("image/png");
-        link.click();
+          html2canvas(element, { scale: 2, useCORS: true }).then(canvas => {
+              const link = document.createElement('a');
+              link.download = 'CricMetrics-Prediction.png';
+              link.href = canvas.toDataURL("image/png");
+              link.click();
 
-        // 4. CLEANUP: Restore original interactive state
-        element.style.backgroundImage = "none";
-        element.style.backgroundColor = "transparent";
-        saveBtn.style.display = "inline-flex";
-        watermark.style.display = "none";
-        
-        // Remove the temporary visual labels and restore inputs
-        const placeholders = element.querySelectorAll('.export-placeholder');
-        placeholders.forEach(p => p.remove());
-        inputs.forEach(i => i.style.display = 'block');
-    });
-}
+              // POST-CAPTURE: UI Reset
+              element.style.backgroundImage = "none";
+              element.style.backgroundColor = "transparent";
+              btns.style.display = "grid";
+              watermark.style.display = "none";
+              const placeholders = element.querySelectorAll('.export-placeholder');
+              placeholders.forEach(p => p.remove());
+              inputs.forEach(i => i.style.display = 'block');
+          });
+      }
     </script>
 </body>
 </html>
