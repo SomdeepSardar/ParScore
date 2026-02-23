@@ -1,235 +1,167 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CricMetrics | Score Predictor</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
-    /* 1. RESET & BASE */
-    * { box-sizing: border-box; }
-   
-    html, body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        min-height: 100vh;
-        background: url("https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=2000") no-repeat center center fixed;
-        background-size: cover;
-    }
 
-    /* 2. LAYOUT ENGINE */
-    .outer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        min-height: 100vh;
-        background: rgba(0, 0, 0, 0.4); /* Darkening layer */
-        padding: 20px;
-    }
-        .header-container {
-            padding: 20px 0;
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-        }
-    /* 3. THE GLASS CARD */
-    .login {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 20px;
-        padding: 40px;
-        width: 100%;
-        max-width: 450px; /* Constrains card size */
-        text-align: center;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-    }
-
-    /* 4. TYPOGRAPHY (Visibility Fix) */
-    h2, .psp, h6, .form-label {
-        color: #ffffff !important;
-        text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
-        margin-top: 0;
-    }
-
-    h6 {
-        font-size: 0.95rem;
-        line-height: 1.5;
-        font-weight: 400;
-        margin-bottom: 30px;
-        opacity: 0.9;
-    }
-
-    /* 5. FORM RECONSTRUCTION */
-    .mb-3 {
-        margin-bottom: 20px;
-        width: 100%;
-        text-align: left; /* Aligns labels to the left for better UX */
-    }
-
-    .form-label {
-        display: block; /* Forces label above the input */
-        width: 100% !important; /* Overrides your previous 200px fixed width */
-        text-align: left !important;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 8px;
-        color: #ffd700 !important; /* Gold labels for contrast */
-    }
-
-    .form-control {
-        width: 100%;
-        height: 45px;
-        border: 1px solid rgba(255,255,255,0.3);
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.9);
-        color: #000;
-        padding: 0 15px;
-        font-size: 1rem;
-        outline: none;
-    }
-
-    .btn-primary {
-        width: 100%;
-        height: 50px;
-        background: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        font-weight: 800;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: 0.3s;
-        box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
-    }
-
-    .btn-primary:hover { background: #0056b3; transform: translateY(-2px); }
-
-    .calc-link {
-        display: block;
-        margin-top: 10px;
-        color: #fff;
-        font-size: 0.8rem;
-        text-decoration: underline;
-        text-align: right;
-    }
-
-    /* 6. RESULT DISPLAY */
-    .result-display {
-        margin-top: 25px;
-        padding-top: 20px;
-        border-top: 1px solid rgba(255,255,255,0.2);
-        color: #4dfa9f !important;
-        font-size: 1.5rem;
-    }
-
-    footer {
-            width: 100%;
-            padding: 20px 0;
-            margin-top: 40px;
-            background: rgba(0, 0, 0, 0.5); /* Darker frost for the bottom */
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.6);
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.85rem;
+        :root {
+            --primary: #1b5e20;
+            --accent: #ffd700;
+            --bg-overlay: rgba(0, 0, 0, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.2);
         }
 
-        .footer-links {
-            margin-bottom: 10px;
+        /* 1. STRUCTURAL FIX: Ensures the dark overlay never breaks */
+        * { box-sizing: border-box; }
+
+        html, body {
+            margin: 0; padding: 0; width: 100%; min-height: 100vh;
+            display: flex; flex-direction: column;
+            background: url("https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=2000") no-repeat center center fixed;
+            background-size: cover; font-family: 'Poppins', sans-serif;
         }
 
-        .footer-links a {
-            color: #ffd700;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: 600;
-            transition: 0.3s;
+        .outer { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            background: var(--bg-overlay); 
+            padding: 20px 20px 0 20px; /* Aligned with calculator padding */
         }
 
-        .footer-links a:hover {
-            color: #ffffff;
-            text-shadow: 0 0 8px #ffd700;
+        /* 2. HEADER: UNTOUCHED BRANDING */
+        .header-container { padding: 20px 0; text-align: center; }
+        .brand-title { 
+            font-size: 2.8rem; font-weight: 400; color: #ffffff; 
+            margin: 0; letter-spacing: -1px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); 
+        }
+        .brand-title b { font-weight: 900; color: var(--accent); }
+        .header-tagline { 
+            font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); 
+            text-transform: uppercase; letter-spacing: 3px; margin-top: -5px; 
         }
 
-        body {
+        /* 3. CENTERED CONTENT WRAPPER */
+        .main-content {
+            flex: 1; 
             display: flex;
-            flex-direction: column; /* Stacks Header -> Card -> Footer */
-            min-height: 100vh;
-            margin: 0;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 40px 0;
         }
 
-        .brand-title {
-            font-size: 2.8rem;
-            font-weight: 400; /* Light for 'Cric' */
-            color: #ffffff;
-            margin: 0;
-            letter-spacing: -1px;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        /* 4. THE GLASS CARD */
+        .login {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
-        .brand-title b {
-            font-weight: 900; /* Heavy for 'Metrics' */
-            color: #ffd700;   /* Gold accent */
+        h6 { font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); line-height: 1.6; margin-bottom: 30px; font-weight: 400; }
+
+        /* 5. FORM ELEMENTS */
+        .mb-3 { margin-bottom: 25px; width: 100%; text-align: left; }
+        .form-label {
+            display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;
+            text-transform: uppercase; letter-spacing: 1px; color: var(--accent) !important;
         }
-        </style>
-        
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏏</text></svg>">
-  </head>
 
-    <body class="outer">
-        <div class="header-container">
-            <h1 class="brand-title">Cric<b>Metrics</b></h1>
-            <div class="header-tagline"> <h6> SCORE PREDICTION</h6> 
-            </div> 
-        </div>
-            
-        <div class="login">
-            <h6>
-                A fun way to keep you engaged with the match. Predict the score 
-                of your favorite team and gauge their probability of winning!
-            </h6>
-        <form action="{{url_for('predict_datapoint')}}" method="post" onsubmit="return showLoading()">
+        .form-control {
+            width: 100%; height: 48px; border-radius: 10px; border: 1px solid transparent;
+            background: rgba(255, 255, 255, 0.95); color: #333; padding: 0 15px;
+            font-size: 1rem; font-family: 'Poppins', sans-serif; outline: none; transition: 0.3s;
+        }
 
-            <div class="mb-3">
-             <label class="form-label">Ground Area (in sq. m)</label>
-             <input class="form-control" type="number" step="any" name="Area" placeholder="e.g. 15000" required />
-             <a href="{{ url_for('calculator') }}" class="calc-link">📏 Open Area Calculator</a>
-         </div>
+        .btn-primary {
+            width: 100%; height: 55px; background: #007bff; color: #fff; border: none;
+            border-radius: 12px; font-weight: 800; font-size: 1.1rem; cursor: pointer;
+            transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3); text-transform: uppercase;
+        }
 
-         <div class="mb-3">
-             <label class="form-label">Pitch Surface</label>
-             <select class="form-control" name="Pitch" required>
-                 <option selected disabled value="">Select Pitch Type</option>
-                 <option value="bat">Batting (Flat)</option>
-                 <option value="bowl">Bowling (Green/Dusty)</option>
-             </select>
-         </div>
+        .calc-link { display: inline-block; margin-top: 10px; color: var(--accent); font-size: 0.85rem; text-decoration: none; font-weight: 600; float: right; }
 
-         
+        /* 6. RESULTS & LOADER */
+        .result-display { margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); color: #4dfa9f !important; font-size: 1.8rem; font-weight: 900; }
+        #loader { display: none; flex-direction: column; align-items: center; margin-top: 20px; }
+        .spinner { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-         <div class="mb-3">
-             <label class="form-label">Anticipated Wickets Lost</label>
-             <input class="form-control" type="number" name="wckts" placeholder="0 - 10" min="0" max="10" required />
-         </div>
-         
-         <div id="predict-btn-container">
-             <input class="btn btn-primary" type="submit" value="Analyze Prediction" />
-         </div>
+        /* 7. SYNCED FOOTER: The Translucent Black Bar */
+        footer {
+            width: 100%;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 0.85rem; /* MATCHED TO CALCULATOR.HTML */
+            color: rgba(255, 255, 255, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.6) !important; /* THE TRANSLUCENT BAR */
+            backdrop-filter: blur(5px);
+            margin-top: auto; 
+        }
 
-         <div id="loader">
-            <div class="spinner"></div>
-            <!-- <div class="loading-text">Computing Match Dynamics...</div> -->
-         </div>
-        </form>
-    
-        {% if true_results %}
-        <h2 class="result-display">
-          🎯 Target Par Score: {{true_results}}
-        </h2>
-        {% endif %}
+        .footer-links { margin-bottom: 10px; font-weight: 600; }
+        .footer-links a { color: var(--accent); text-decoration: none; margin: 0 15px; transition: 0.3s; }
+    </style>
+</head>
+
+<body class="outer">
+    <div class="header-container">
+        <h1 class="brand-title">Cric<b>Metrics</b></h1>
+        <div class="header-tagline">Advanced Venue Analytics</div>
     </div>
+        
+    <div class="main-content">
+        <div class="login">
+            <h6>Predict the par score based on ground dynamics.</h6>
+            <form action="{{url_for('predict_datapoint')}}" method="post" onsubmit="return showLoading()">
+                <div class="mb-3">
+                    <label class="form-label">Ground Area (sq. m)</label>
+                    <input class="form-control" type="number" step="any" name="Area" placeholder="e.g. 17844" required />
+                    <a href="{{ url_for('calculator') }}" class="calc-link">📏 Venue Analytics</a>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Pitch Surface</label>
+                    <select class="form-control" name="Pitch" required>
+                        <option value="bat">Batting (Flat)</option>
+                        <option value="bowl">Bowling (Green/Dusty)</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Wickets Lost</label>
+                    <input class="form-control" type="number" name="wckts" placeholder="0 - 10" required />
+                </div>
+                <div id="predict-btn-container" style="margin-top: 30px;">
+                    <input class="btn btn-primary" type="submit" value="Analyze Prediction" />
+                </div>
+                <div id="loader"><div class="spinner"></div></div>
+            </form>
+            {% if true_results %}
+            <h2 class="result-display">🎯 Par Score: {{true_results}}</h2>
+            {% endif %}
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <span style="color: rgba(255,255,255,0.3); margin-right: 15px;">Predictor Engine</span>
+            <a href="{{ url_for('calculator') }}">Venue Analytics</a>
+        </div>
+        <p>&copy; 2026 CricMetrics Analytics. All rights reserved.</p>
+    </footer>
 
     <script>
       window.onload = function() {
@@ -243,20 +175,11 @@
               }
           }
       }
-
       function showLoading() {
           document.getElementById('predict-btn-container').style.display = 'none';
           document.getElementById('loader').style.display = 'flex';
           return true;
       }
     </script>
-
-    <footer>
-        <div class="footer-links">
-            Predictor Engine
-            <a href="{{ url_for('calculator') }}">Venue Analytics</a>
-        </div>
-        <p>&copy; 2026 CricMetrics Analytics.</p>
-    </footer>
 </body>
 </html>
