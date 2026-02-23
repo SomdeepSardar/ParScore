@@ -5,6 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grounds-Master Dashboard</title>
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
+            
+        .header-container {
+            padding: 20px 0;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .brand-title {
+            font-size: 2.8rem;
+            font-weight: 400; /* Light for 'Cric' */
+            color: #ffffff;
+            margin: 0;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .brand-title b {
+            font-weight: 900; /* Heavy for 'Metrics' */
+            color: #ffd700;   /* Gold accent */
+        }
+
+        .header-tagline {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: -5px;
+        }
         :root {
             --primary: #1b5e20;
             --secondary: #2e7d32;
@@ -113,14 +142,77 @@
             border-radius: 10px;
             padding: 10px;
         }
+        footer {
+            width: 100%;
+            padding: 20px 0;
+            margin-top: 40px;
+            background: rgba(0, 0, 0, 0.5); /* Darker frost for the bottom */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        .footer-links {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ffd700;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+            text-shadow: 0 0 8px #ffd700;
+        }
+
+        html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100vh;
+        background: url("https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=2000") no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+            flex-direction: column; /* Stacks Header -> Card -> Footer */
+            min-height: 100vh;
+            margin: 0;
+    }
+
+        .outer {
+            flex: 1; /* This "pushes" the footer to the bottom by taking up all available space */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 40px;
+        width: 100%;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
     </style>
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏏</text></svg>">
 </head>
-<body>
-
-<div class="header">
-    <h1>Grounds-Master <small style="font-weight: 300;">v1.0</small></h1>
+<body class="outer">
+<div class="header-container">
+    <h1 class="brand-title">Cric<b>Metrics</b></h1>
+    <div class="header-tagline">Advanced Venue Analytics</div>
 </div>
-
+<div class="login">
 <div class="dashboard">
     <div class="card">
         <h3>Field Dimensions</h3>
@@ -168,6 +260,7 @@
             <p style="font-size: 0.75rem; color: #666;">Field Proportion Preview</p>
         </div>
     </div>
+</div>
 </div>
 
 <script>
@@ -225,5 +318,14 @@
     updateDashboard();
 </script>
 
-</body>
+
+    <footer>
+        <div class="footer-links">
+            <a href="{{ url_for('predict_datapoint') }}">Predictor</a>
+            Venue Analytics
+        </div>
+        <p>&copy; 2026 CricMetrics Analytics.</p>
+    </footer>
+
+</bod>
 </html>

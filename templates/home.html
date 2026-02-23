@@ -1,9 +1,10 @@
 <html>
   <head>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
     /* 1. RESET & BASE */
     * { box-sizing: border-box; }
-    
+   
     html, body {
         margin: 0;
         padding: 0;
@@ -23,7 +24,11 @@
         background: rgba(0, 0, 0, 0.4); /* Darkening layer */
         padding: 20px;
     }
-
+        .header-container {
+            padding: 20px 0;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
     /* 3. THE GLASS CARD */
     .login {
         background: rgba(255, 255, 255, 0.1);
@@ -116,19 +121,83 @@
         color: #4dfa9f !important;
         font-size: 1.5rem;
     }
-</style>
+
+    footer {
+            width: 100%;
+            padding: 20px 0;
+            margin-top: 40px;
+            background: rgba(0, 0, 0, 0.5); /* Darker frost for the bottom */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        .footer-links {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ffd700;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+            text-shadow: 0 0 8px #ffd700;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column; /* Stacks Header -> Card -> Footer */
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .brand-title {
+            font-size: 2.8rem;
+            font-weight: 400; /* Light for 'Cric' */
+            color: #ffffff;
+            margin: 0;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .brand-title b {
+            font-weight: 900; /* Heavy for 'Metrics' */
+            color: #ffd700;   /* Gold accent */
+        }
+        </style>
+        
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏏</text></svg>">
   </head>
 
-  <body class="outer">
-    <div class="login">
-        <h2>Welcome to Cricket</h2>
-        <h2 class="psp">Par Score Prediction</h2>
-        <h6>
-          A fun way to keep you engaged with the match. Predict the score 
-          of your favorite team and gauge their probability of winning!
-        </h6>
-   
+    <body class="outer">
+        <div class="header-container">
+            <h1 class="brand-title">Cric<b>Metrics</b></h1>
+            <div class="header-tagline"> <h6> SCORE PREDICTION</h6> 
+            </div> 
+        </div>
+            
+        <div class="login">
+            <h6>
+                A fun way to keep you engaged with the match. Predict the score 
+                of your favorite team and gauge their probability of winning!
+            </h6>
         <form action="{{url_for('predict_datapoint')}}" method="post" onsubmit="return showLoading()">
+
+            <div class="mb-3">
+             <label class="form-label">Ground Area (in sq. m)</label>
+             <input class="form-control" type="number" step="any" name="Area" placeholder="e.g. 15000" required />
+             <a href="{{ url_for('calculator') }}" class="calc-link">📏 Open Area Calculator</a>
+         </div>
+
          <div class="mb-3">
              <label class="form-label">Pitch Surface</label>
              <select class="form-control" name="Pitch" required>
@@ -138,11 +207,7 @@
              </select>
          </div>
 
-         <div class="mb-3">
-             <label class="form-label">Ground Area (sq. m)</label>
-             <input class="form-control" type="number" step="any" name="Area" placeholder="e.g. 15000" required />
-             <a href="{{ url_for('calculator') }}" class="calc-link">📏 Open Area Calculator</a>
-         </div>
+         
 
          <div class="mb-3">
              <label class="form-label">Anticipated Wickets Lost</label>
@@ -155,15 +220,15 @@
 
          <div id="loader">
             <div class="spinner"></div>
-            <div class="loading-text">Computing Match Dynamics...</div>
+            <!-- <div class="loading-text">Computing Match Dynamics...</div> -->
          </div>
-    </form>
+        </form>
     
-    {% if true_results %}
-    <h2 class="result-display">
-      🎯 Target Par Score: {{true_results}}
-    </h2>
-    {% endif %}
+        {% if true_results %}
+        <h2 class="result-display">
+          🎯 Target Par Score: {{true_results}}
+        </h2>
+        {% endif %}
     </div>
 
     <script>
@@ -185,5 +250,13 @@
           return true;
       }
     </script>
-  </body>
+
+    <footer>
+        <div class="footer-links">
+            Predictor
+            <a href="{{ url_for('calculator') }}">Venue Analytics</a>
+        </div>
+        <p>&copy; 2026 CricMetrics Analytics.</p>
+    </footer>
+</bod>
 </html>
