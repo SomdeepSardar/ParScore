@@ -134,7 +134,7 @@
             <form id="prediction-form" action="{{url_for('predict_datapoint')}}" method="post" onsubmit="return showLoading()">
                 <div class="mb-3">
                     <label class="form-label">Ground Area (sq. m)</label>
-                    <input class="form-control" type="number" step="any" name="Area" id="area-input" value="{{ request.form.get('Area', '') }}" required />
+                    <input class="form-control" type="number" step="any" name="Area" id="area-input" value="{{ request.form.get('Area', '') }}" placeholder="e.g. 17844" required />
                     <a href="{{ url_for('calculator') }}" class="calc-link">📏 Venue Analytics</a>
                 </div>
                 <div class="mb-3">
@@ -147,7 +147,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Anticipated Wickets Lost</label>
-                    <input class="form-control" type="number" name="wckts" value="{{ request.form.get('wckts', '') }}" required />
+                    <input class="form-control" type="number" name="wckts" placeholder="0 - 10" value="{{ request.form.get('wckts', '') }}" required />
                 </div>
                 <div id="predict-btn-container" style="margin-top: 30px;">
                     <input class="btn btn-primary" type="submit" value="Analyze Prediction" />
@@ -176,6 +176,7 @@
             <a href="{{ url_for('calculator') }}">Venue Analytics</a>
         </div>
         <p>&copy; 2026 CricMetrics Analytics. All rights reserved.</p>
+        <p>&copy; Made by Somdeep, with &#10084</p>
     </footer>
 
     <script>
